@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/brunobaltazar/kubernets_app.git
+    repoURL: https://github.com/brunobaltazar/kubernets_app_argo_cd.git   # Repositório Git com os manifests
     targetRevision: main
     path: apache/hml
     directory:
