@@ -7,7 +7,7 @@ spec:
   project: default                  # Nome do projeto Argo CD (padrão = default)
 
   source:
-    repoURL: https://github.com/brunobaltazar/kubernets_app.git   # Repositório Git com os manifests
+    repoURL: https://github.com/brunobaltazar/kubernets_app_argo_cd.git   # Repositório Git com os manifests
     targetRevision: main                                          # Branch a ser usada (ex: main, develop)
     path: nginx/hml                                               # Caminho dentro do repositório onde estão os manifests
     directory:
@@ -24,3 +24,4 @@ spec:
 
     syncOptions:
       - CreateNamespace=true  # ✅ Cria o namespace automaticamente se ele ainda não existir (não afeta namespace já existente)
+
