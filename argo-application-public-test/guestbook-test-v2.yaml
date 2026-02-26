@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook-helm-test
+  namespace: argocd
+spec:
+  project: homolog
+  source:
+    repoURL: https://github.com/argoproj/argocd-example-apps.git
+    targetRevision: master
+    path: helm-guestbook
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: homolog
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
