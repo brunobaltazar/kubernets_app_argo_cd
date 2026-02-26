@@ -18,7 +18,7 @@ metadata:
   name: hml-nginx
   namespace: hml
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hml-nginx
@@ -76,5 +76,6 @@ spec:
                 name: hml-nginx
                 port:
                   number: 80
+
 
 
