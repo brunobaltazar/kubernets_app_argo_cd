@@ -13,7 +13,7 @@ spec:
       recurse: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: hml
+    namespace: hml-apache
   syncPolicy:
     automated:
       prune: false         # ❗ Não remove recursos que estão fora do Git — importante para preservar o namespace "hml"

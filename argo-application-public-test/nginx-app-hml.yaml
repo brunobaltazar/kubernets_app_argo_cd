@@ -15,7 +15,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc                      # Alvo padrão (cluster onde o Argo CD está rodando)
-    namespace: hml                                              # Namespace onde os recursos serão criados
+    namespace: hml-nginx                                             # Namespace onde os recursos serão criados
 
   syncPolicy:
     automated:
