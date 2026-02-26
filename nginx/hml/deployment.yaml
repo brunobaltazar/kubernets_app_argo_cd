@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-index-html
-  namespace: hml
+  namespace: hml-nginx
 data:
   index.html: |
     <!DOCTYPE html>
@@ -16,7 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hml-nginx
-  namespace: hml
+  namespace: hml-nginx
 spec:
   replicas: 1
   selector:
@@ -45,7 +45,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hml-nginx
-  namespace: hml
+  namespace: hml-nginx
 spec:
   selector:
     app: hml-nginx
@@ -76,6 +76,3 @@ spec:
                 name: hml-nginx
                 port:
                   number: 80
-
-
-
