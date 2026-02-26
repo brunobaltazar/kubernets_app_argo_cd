@@ -1,27 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-hml                   # Nome da aplicação no Argo CD
-  namespace: argocd                 # Namespace onde o Argo CD está instalado
+  name: nginx-hml                    # Nome da aplicação no Argo CD
+  namespace: argocd                  # Namespace onde o Argo CD está instalado
 spec:
-  project: default                  # Nome do projeto Argo CD (padrão = default)
+  project: homolog                   # ALTERAÇÃO: evitar project default; usar projeto dedicado de homolog
 
   source:
-    repoURL: https://github.com/brunobaltazar/kubernets_app_argo_cd.git   # Repositório Git com os manifests
-    targetRevision: main                                          # Branch a ser usada (ex: main, develop)
-    path: nginx/hml                                               # Caminho dentro do repositório onde estão os manifests
+    repoURL: https://github.com/brunobaltazar/kubernets_app_argo_cd.git  # Repositório Git com os manifests
+    targetRevision: main                                                  # Para produção, prefira tag ou commit fixo
+    path: nginx/hml                                                       # Caminho dentro do repositório
     directory:
-      recurse: true                                               # Aplica todos os YAMLs dentro da pasta (não precisa listar individualmente)
+      recurse: true                                                       # Aplica todos os YAMLs dentro da pasta
 
   destination:
-    server: https://kubernetes.default.svc                      # Alvo padrão (cluster onde o Argo CD está rodando)
-    namespace: hml-nginx                                             # Namespace onde os recursos serão criados
+    server: https://kubernetes.default.svc                                # Cluster local onde o Argo CD está rodando
+    namespace: hml-nginx                                                  # Namespace dedicado da aplicação
 
   syncPolicy:
     automated:
-      prune: false         # ❗ Não remove recursos que estão fora do Git — importante para preservar o namespace "hml"
-      selfHeal: true       # ✅ Repara recursos automaticamente se forem modificados fora do Argo
+      prune: true          # ALTERAÇÃO: como o namespace é dedicado, é melhor manter Git = cluster
+      selfHeal: true       # Reaplica se houver drift manual no cluster
 
     syncOptions:
-      - CreateNamespace=true  # ✅ Cria o namespace automaticamente se ele ainda não existir (não afeta namespace já existente)
-
+      - CreateNamespace=true  # Cria o namespace se ainda não existir

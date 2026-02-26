@@ -1,23 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apache-hml
-  namespace: argocd
+  name: apache-hml                 # Nome da aplicação no Argo CD
+  namespace: argocd                # Namespace onde o Argo CD está instalado
 spec:
-  project: default
+  project: homolog                 # ALTERAÇÃO: usar projeto dedicado
+
   source:
-    repoURL: https://github.com/brunobaltazar/kubernets_app_argo_cd.git   # Repositório Git com os manifests
-    targetRevision: main
-    path: apache/hml
+    repoURL: https://github.com/brunobaltazar/kubernets_app_argo_cd.git  # Repositório Git com os manifests
+    targetRevision: main                                                  # Para produção, prefira tag ou commit
+    path: apache/hml                                                      # Caminho da aplicação
     directory:
-      recurse: true
+      recurse: true                                                       # Aplica todos os YAMLs da pasta
+
   destination:
-    server: https://kubernetes.default.svc
-    namespace: hml-apache
+    server: https://kubernetes.default.svc                                # Cluster atual
+    namespace: hml-apache                                                 # Namespace dedicado da aplicação
+
   syncPolicy:
     automated:
-      prune: false         # ❗ Não remove recursos que estão fora do Git — importante para preservar o namespace "hml"
-      selfHeal: true       # ✅ Repara recursos automaticamente se forem modificados fora do Argo
+      prune: true          # ALTERAÇÃO: namespace dedicado = melhor manter limpeza automática
+      selfHeal: true       # Reaplica caso alguém altere manualmente
 
     syncOptions:
-      - CreateNamespace=true  # ✅ Cria o namespace automaticamente se ele ainda não existir (não afeta namespace já existente)
+      - CreateNamespace=true  # Cria namespace automaticamente se não existir

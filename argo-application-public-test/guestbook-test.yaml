@@ -4,17 +4,17 @@ metadata:
   name: guestbook-test
   namespace: argocd
 spec:
-  project: default
+  project: homolog                 # ALTERAÇÃO: usar o projeto correto em vez de default
   source:
     repoURL: https://github.com/argoproj/argocd-example-apps.git
-    targetRevision: master
+    targetRevision: master         # Apenas para teste/laboratório
     path: guestbook
   destination:
     server: https://kubernetes.default.svc
-    namespace: homolog
+    namespace: homolog             # Namespace compartilhado
   syncPolicy:
     automated:
-      prune: true
+      prune: true                  # Pode manter true; isso remove só recursos dessa app
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
